@@ -109,15 +109,15 @@ public class Primes {
 	// Generate and store the hexagon crosses, along with the two twin primes that generate the hexagon cross.
 	public void generateHexPrimes()
 	{
-		for (int i = 1; i < this.twin_primes.size(); i++) {
+		for (int i = 0; i < this.twin_primes.size(); i++) {
 			Pair<BigInteger> pair_one = this.twin_primes.get(i);
-			Pair<BigInteger> pair_two = this.twin_primes.get(i - 1);
-			
-			if (pair_two.getKey().compareTo(BigInteger.valueOf(29)) == 0)
-				System.out.println(pair_two.getKey() + "///" + pair_one.getKey() + "///" + pair_one.getKey().add(BigInteger.ONE) + "/" + pair_two.getKey().add(BigInteger.ONE) + "/" + pair_one.getKey().add(BigInteger.ONE).divide(pair_two.getKey().add(BigInteger.ONE)));
-			
-			if (pair_one.getKey().add(BigInteger.ONE).divide(pair_two.getKey().add(BigInteger.ONE)).compareTo(BigInteger.valueOf(2)) == 0)
-				this.hexagon_crosses.add(new Pair<Pair<BigInteger>>(pair_two, pair_one));
+			for (int j = (i + 1); j < this.twin_primes.size(); j++) {
+				Pair<BigInteger> pair_two = this.twin_primes.get(j);
+				if (pair_two.getKey().add(BigInteger.ONE).divide(pair_one.getKey().add(BigInteger.ONE)).compareTo(BigInteger.valueOf(2)) == 0 && pair_two.getKey().add(BigInteger.ONE).compareTo(pair_one.getKey().add(BigInteger.ONE).multiply(BigInteger.valueOf(2))) == 0) {
+					this.hexagon_crosses.add(new Pair<Pair<BigInteger>>(pair_one, pair_two));
+					break;
+				}
+			}
 		}
 	}
 }
